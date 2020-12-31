@@ -1,1 +1,1 @@
-web: ./target/release/world-time-api
+web: ROCKET_PORT=$PORT ROCKET_KEEP_ALIVE=0 ./target/release/world-time-api
