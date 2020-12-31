@@ -88,6 +88,7 @@ fn not_found<'a>(req: &'a rocket::Request) -> Json<String> {
     Json(format!("\"Unable to find Timezone {}\"", req.uri().path()))
 }
 fn main() {
+    println!("Running!");
     rocket::ignite()
         .mount("/", routes![get_tzinfo])
         .register(catchers![bad_request, not_found])
