@@ -4,6 +4,7 @@ extern crate rocket;
 
 use libtzfile::Tz;
 use rocket::{http::Status, response::content::Json};
+use rocket_cors::{AllowedHeaders, AllowedOrigins};
 use std::env;
 
 // Return a String that's correctly formatted for Timezone lookup.
@@ -88,9 +89,18 @@ fn not_found<'a>(req: &'a rocket::Request) -> Json<String> {
     Json(format!("\"Unable to find Timezone {}\"", req.uri().path()))
 }
 fn main() {
-    println!("Running!");
+    let cors = rocket_cors::CorsOptions {
+        AllowedOrigins::all(),
+        allowed_methods: vec![Method::Get].into_iter().map(From::from).collect(),
+        allowed_headers: AllowedHeaders::all(),
+        allow_credentials: true,
+        ..Default::default()
+    }
+    .to_cors().expect("to_cors() failed somehow");
+
     rocket::ignite()
         .mount("/", routes![get_tzinfo])
         .register(catchers![bad_request, not_found])
+        .attatch(cors)
         .launch();
 }
