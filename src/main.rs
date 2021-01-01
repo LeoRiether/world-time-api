@@ -101,6 +101,6 @@ fn main() {
     rocket::ignite()
         .mount("/", routes![get_tzinfo])
         .register(catchers![bad_request, not_found])
-        .attatch(cors)
+        .attach(cors)
         .launch();
 }
