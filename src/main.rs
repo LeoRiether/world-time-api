@@ -3,7 +3,7 @@
 extern crate rocket;
 
 use libtzfile::Tz;
-use rocket::{http::Status, response::content::Json};
+use rocket::{http::{Status, Method}, response::content::Json, get, routes};
 use rocket_cors::{AllowedHeaders, AllowedOrigins};
 use std::env;
 
