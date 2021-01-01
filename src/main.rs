@@ -88,9 +88,10 @@ fn bad_request() -> Json<&'static str> {
 fn not_found<'a>(req: &'a rocket::Request) -> Json<String> {
     Json(format!("\"Unable to find Timezone {}\"", req.uri().path()))
 }
+
 fn main() {
     let cors = rocket_cors::CorsOptions {
-        AllowedOrigins::all(),
+        allowed_origins: AllowedOrigins::all(),
         allowed_methods: vec![Method::Get].into_iter().map(From::from).collect(),
         allowed_headers: AllowedHeaders::all(),
         allow_credentials: true,
